@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PropCompare — Le comparateur de prop firms #1 en France</title>
+<meta name="description" content="Comparez les meilleures prop firms disponibles pour les traders français. Prix, profit split, règles, avis — tout en un seul endroit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #1a1a1a;
+    --border: rgba(255,255,255,0.07);
+    --border-hover: rgba(255,255,255,0.15);
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --text: #e8e6e0;
+    --text-muted: #7a7870;
+    --text-mid: #b0ada5;
+    --green: #3d8c5a;
+    --radius: 10px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 400; line-height: 1.6; min-height: 100vh; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 200; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); letter-spacing: -0.02em; cursor: pointer; }
+  .logo span { color: var(--gold); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta { background: var(--gold); color: #0a0a0a; border: none; padding: 8px 20px; border-radius: 6px; font-size: 0.875rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--gold-light); }
+
+  /* HERO */
+  .hero { padding: 90px 5% 70px; max-width: 900px; margin: 0 auto; text-align: center; }
+  .hero-tag { display: inline-block; border: 1px solid rgba(201,168,76,0.3); color: var(--gold); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 14px; border-radius: 20px; margin-bottom: 28px; background: rgba(201,168,76,0.06); }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 20px; color: #f0ede6; }
+  .hero h1 em { color: var(--gold); font-style: italic; }
+  .hero p { font-size: 1.05rem; color: var(--text-mid); max-width: 580px; margin: 0 auto 40px; line-height: 1.7; }
+  .hero-stats { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; }
+  .stat-item { text-align: center; }
+  .stat-num { display: block; font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .section-divider { border: none; height: 1px; background: var(--border); margin: 0 5%; }
+
+  /* FILTERS */
+  .filters-bar { padding: 28px 5%; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; max-width: 1300px; margin: 0 auto; }
+  .filter-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-right: 4px; }
+  .filter-btn { background: var(--bg2); border: 1px solid var(--border); color: var(--text-mid); padding: 7px 16px; border-radius: 6px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; font-weight: 400; }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
+  .filter-select { background: var(--bg2); border: 1px solid var(--border); color: var(--text-mid); padding: 7px 32px 7px 12px; border-radius: 6px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237a7870' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; transition: border-color 0.2s; }
+  .filter-select option { background: #1a1a1a; }
+  .search-box { margin-left: auto; background: var(--bg2); border: 1px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: 6px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; width: 220px; transition: border-color 0.2s; outline: none; }
+  .search-box::placeholder { color: var(--text-muted); }
+  .search-box:focus { border-color: var(--gold); }
+
+  /* CARDS */
+  .main-content { max-width: 1300px; margin: 0 auto; padding: 8px 5% 60px; }
+  .result-info { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px; }
+  .result-info strong { color: var(--text-mid); }
+  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+  .firm-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: border-color 0.2s, transform 0.15s; position: relative; overflow: hidden; }
+  .firm-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: transparent; transition: background 0.2s; }
+  .firm-card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+  .firm-card:hover::before { background: var(--gold); }
+  .firm-card.featured { border-color: rgba(201,168,76,0.25); }
+  .firm-card.featured::before { background: var(--gold); }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+  .firm-logo-area { display: flex; align-items: center; gap: 12px; }
+  .firm-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; letter-spacing: 0.04em; }
+  .firm-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--text); line-height: 1.2; }
+  .firm-country { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+  .badges-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
+  .badge { font-size: 0.7rem; font-weight: 600; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.04em; text-transform: uppercase; }
+  .badge-market { background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.2); }
+  .badge-feat { background: rgba(61,140,90,0.1); color: #4ead72; border: 1px solid rgba(61,140,90,0.2); }
+  .badge-popular { background: rgba(138,99,210,0.1); color: #a87de8; border: 1px solid rgba(138,99,210,0.2); }
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+  .metric { background: var(--bg3); border-radius: 7px; padding: 10px 12px; }
+  .metric-label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+  .metric-value { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+  .metric-value.highlight { color: var(--gold); }
+  .metric-value.green { color: #4ead72; }
+  .rating-row { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; border-top: 1px solid var(--border); }
+  .stars { display: flex; gap: 2px; align-items: center; }
+  .star { width: 13px; height: 13px; fill: var(--gold); }
+  .star.empty { fill: var(--bg3); }
+  .rating-num { font-size: 0.85rem; font-weight: 600; color: var(--text); margin-left: 6px; }
+  .rating-count { font-size: 0.75rem; color: var(--text-muted); margin-left: 4px; }
+  .card-cta { background: transparent; border: 1px solid var(--border); color: var(--text-mid); padding: 7px 16px; border-radius: 6px; font-size: 0.82rem; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; font-weight: 500; text-decoration: none; display: inline-block; }
+  .card-cta:hover { border-color: var(--gold); color: var(--gold); }
+  .card-cta-primary { background: var(--gold); border-color: var(--gold); color: #0a0a0a; font-weight: 600; }
+  .card-cta-primary:hover { background: var(--gold-light); border-color: var(--gold-light); color: #0a0a0a; }
+
+  /* COMPARISON TABLE */
+  .section-title-area { max-width: 1300px; margin: 0 auto; padding: 48px 5% 24px; }
+  .section-label { font-size: 0.75rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 10px; }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: 1.9rem; color: var(--text); letter-spacing: -0.02em; }
+  .table-wrapper { max-width: 1300px; margin: 0 auto; padding: 0 5% 64px; overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; min-width: 800px; }
+  thead tr { border-bottom: 1px solid var(--border); }
+  th { text-align: left; padding: 12px 16px; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+  td { padding: 14px 16px; border-bottom: 1px solid var(--border); color: var(--text-mid); vertical-align: middle; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  td:first-child { color: var(--text); font-weight: 500; }
+  .td-green { color: #4ead72; font-weight: 500; }
+  .td-gold { color: var(--gold); font-weight: 600; }
+  .check { color: #4ead72; font-size: 1rem; }
+  .cross { color: #444; font-size: 1rem; }
+
+  /* GUIDE */
+  .guide-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 64px 5%; }
+  .guide-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .guide-title { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--text); letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.2; }
+  .guide-intro { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 28px; }
+  .guide-items { display: flex; flex-direction: column; gap: 18px; }
+  .guide-item { display: flex; gap: 14px; align-items: flex-start; }
+  .guide-num { width: 28px; height: 28px; border-radius: 6px; background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); color: var(--gold); font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .guide-item-title { font-weight: 600; color: var(--text); font-size: 0.9rem; margin-bottom: 3px; }
+  .guide-item-text { color: var(--text-muted); font-size: 0.85rem; line-height: 1.6; }
+  .glossary { display: flex; flex-direction: column; gap: 14px; }
+  .gloss-item { padding: 14px 16px; background: var(--bg3); border-radius: 8px; border-left: 2px solid rgba(201,168,76,0.3); }
+  .gloss-term { font-weight: 600; color: var(--gold); font-size: 0.85rem; margin-bottom: 4px; }
+  .gloss-def { color: var(--text-muted); font-size: 0.82rem; line-height: 1.5; }
+
+  /* FOOTER */
+  .footer-wrapper { border-top: 1px solid var(--border); padding: 40px 5%; }
+  footer { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--text-muted); }
+  .footer-logo span { color: var(--gold); }
+  .footer-text { font-size: 0.78rem; color: var(--text-muted); max-width: 500px; line-height: 1.5; }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.8rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* MODAL OVERLAY */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 500; backdrop-filter: blur(4px); overflow-y: auto; padding: 40px 20px; }
+  .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+  .modal-box { background: var(--bg2); border: 1px solid var(--border-hover); border-radius: 16px; width: 100%; max-width: 680px; position: relative; overflow: hidden; margin: auto; }
+  .modal-header { padding: 28px 32px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .modal-header-left { display: flex; align-items: center; gap: 14px; }
+  .modal-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--text); }
+  .modal-sub { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+  .modal-close { background: var(--bg3); border: 1px solid var(--border); color: var(--text-muted); width: 36px; height: 36px; border-radius: 8px; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; font-family: 'DM Sans', sans-serif; }
+  .modal-close:hover { border-color: var(--border-hover); color: var(--text); }
+  .modal-body { padding: 28px 32px; }
+
+  /* FIRM MODAL SPECIFIC */
+  .firm-score-banner { background: var(--bg3); border-radius: 10px; padding: 16px 20px; display: flex; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+  .score-item { text-align: center; flex: 1; min-width: 80px; }
+  .score-val { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--gold); }
+  .score-lbl { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 2px; }
+  .modal-section { margin-bottom: 24px; }
+  .modal-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 12px; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .detail-row { background: var(--bg3); border-radius: 7px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; }
+  .detail-key { font-size: 0.82rem; color: var(--text-muted); }
+  .detail-val { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+  .detail-val.g { color: #4ead72; }
+  .detail-val.gold { color: var(--gold); }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pros-box, .cons-box { background: var(--bg3); border-radius: 8px; padding: 14px; }
+  .pros-box { border-left: 2px solid rgba(78,173,114,0.4); }
+  .cons-box { border-left: 2px solid rgba(192,57,43,0.4); }
+  .pc-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .pros-box .pc-title { color: #4ead72; }
+  .cons-box .pc-title { color: #e07070; }
+  .pc-item { font-size: 0.82rem; color: var(--text-muted); padding: 3px 0; display: flex; gap: 6px; line-height: 1.4; }
+  .pc-dot { flex-shrink: 0; margin-top: 5px; width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+  .pros-box .pc-dot { color: #4ead72; }
+  .cons-box .pc-dot { color: #e07070; }
+  .modal-cta-row { display: flex; gap: 10px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  .modal-btn-primary { flex: 1; background: var(--gold); border: none; color: #0a0a0a; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s; }
+  .modal-btn-primary:hover { background: var(--gold-light); }
+  .modal-btn-sec { background: transparent; border: 1px solid var(--border); color: var(--text-mid); padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; }
+  .modal-btn-sec:hover { border-color: var(--border-hover); color: var(--text); }
+  .verdict-box { background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2); border-radius: 8px; padding: 14px 16px; margin-bottom: 20px; }
+  .verdict-label { font-size: 0.72rem; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .verdict-text { font-size: 0.85rem; color: var(--text-mid); line-height: 1.6; }
+
+  /* SUBMIT FORM */
+  .form-group { margin-bottom: 18px; }
+  .form-label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--text-mid); margin-bottom: 6px; }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; background: var(--bg3); border: 1px solid var(--border); color: var(--text);
+    padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s; outline: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--gold); }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--text-muted); }
+  .form-textarea { min-height: 90px; resize: vertical; }
+  .form-select option { background: #1a1a1a; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; line-height: 1.5; }
+  .form-success { text-align: center; padding: 20px 0; }
+  .form-success-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .form-success-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--text); margin-bottom: 8px; }
+  .form-success-text { color: var(--text-muted); font-size: 0.88rem; }
+
+  /* MENTIONS LÉGALES */
+  .legal-content { font-size: 0.88rem; color: var(--text-mid); line-height: 1.8; }
+  .legal-content h3 { font-family: 'DM Serif Display', serif; font-size: 1.1rem; color: var(--text); margin: 20px 0 8px; }
+  .legal-content h3:first-child { margin-top: 0; }
+  .legal-content p { margin-bottom: 10px; }
+  .legal-content ul { margin: 8px 0 10px 20px; }
+  .legal-content li { margin-bottom: 4px; }
+  .legal-content a { color: var(--gold); text-decoration: none; }
+  .legal-content strong { color: var(--text); }
+
+  /* CONTACT */
+  .contact-intro { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
+  .contact-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+  .contact-card { background: var(--bg3); border-radius: 8px; padding: 16px; }
+  .contact-card-icon { font-size: 1.3rem; margin-bottom: 8px; }
+  .contact-card-title { font-weight: 600; color: var(--text); font-size: 0.88rem; margin-bottom: 4px; }
+  .contact-card-text { font-size: 0.8rem; color: var(--text-muted); }
+  .contact-card-link { font-size: 0.82rem; color: var(--gold); text-decoration: none; display: block; margin-top: 6px; }
+
+  /* HIDDEN */
+  .hidden { display: none !important; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hero { padding: 60px 5% 50px; }
+    .hero-stats { gap: 2rem; }
+    .guide-inner { grid-template-columns: 1fr; gap: 40px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .search-box { width: 100%; margin-left: 0; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .pros-cons, .detail-grid, .form-grid, .contact-cards { grid-template-columns: 1fr; }
+    .modal-box { margin: 0; }
+    .modal-header, .modal-body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Prop<span>Compare</span></div>
+  <ul class="nav-links">
+    <li><a href="#comparateur">Comparateur</a></li>
+    <li><a href="#tableau">Tableau</a></li>
+    <li><a href="#guide">Guide</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal('submitModal')">Soumettre une firm</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Mis à jour · Avril 2026</div>
+  <h1>Le comparateur de<br><em>prop firms</em> en France</h1>
+  <p>Comparez les meilleures prop firms disponibles pour les traders français. Prix, profit split, règles, avis — tout en un seul endroit.</p>
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-num">12</span><span class="stat-label">Prop firms analysées</span></div>
+    <div class="stat-item"><span class="stat-num">95%</span><span class="stat-label">Profit split max</span></div>
+    <div class="stat-item"><span class="stat-num">24h</span><span class="stat-label">Paiement le plus rapide</span></div>
+    <div class="stat-item"><span class="stat-num">€49</span><span class="stat-label">Challenge le moins cher</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- FILTERS -->
+<div class="filters-bar" id="comparateur">
+  <span class="filter-label">Marché</span>
+  <button class="filter-btn active" onclick="filterMarket(this,'all')">Tous</button>
+  <button class="filter-btn" onclick="filterMarket(this,'forex')">Forex</button>
+  <button class="filter-btn" onclick="filterMarket(this,'futures')">Futures</button>
+  <button class="filter-btn" onclick="filterMarket(this,'crypto')">Crypto</button>
+  <span class="filter-label" style="margin-left:12px">Trier par</span>
+  <select class="filter-select" onchange="sortCards(this.value)">
+    <option value="rating">Note</option>
+    <option value="price">Prix croissant</option>
+    <option value="split">Profit split</option>
+  </select>
+  <input type="text" class="search-box" placeholder="Rechercher une prop firm…" oninput="searchCards(this.value)">
+</div>
+
+<!-- CARDS GRID -->
+<div class="main-content">
+  <div class="result-info"><strong id="count">12</strong> prop firms disponibles</div>
+  <div class="cards-grid" id="cardsGrid">
+
+    <!-- FTMO -->
+    <div class="firm-card featured" data-market="forex" data-price="155" data-split="90" data-rating="4.8" data-name="ftmo">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a1a2e;color:#6c8ebf">FTMO</div><div><div class="firm-name">FTMO</div><div class="firm-country">🇨🇿 République Tchèque</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD · Crypto</span><span class="badge badge-popular">⭐ Le plus connu</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">€155 – €1 089</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">90%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">10% · 5% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">14 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.8</span><span class="rating-count">/ 5 (2 400+ avis)</span>
+        </div>
+        <button class="card-cta card-cta-primary" onclick="openFirmModal('ftmo')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- FundedNext -->
+    <div class="firm-card" data-market="forex" data-price="49" data-split="95" data-rating="4.7" data-name="fundednext">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0f2027;color:#00b4d8">FN</div><div><div class="firm-name">FundedNext</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Paiement 24h</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$49 – $999</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">95%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">10% · 5% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value green">24 heures</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.7</span><span class="rating-count">/ 5 (1 800+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('fundednext')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- The Funded Trader -->
+    <div class="firm-card" data-market="forex" data-price="129" data-split="90" data-rating="4.3" data-name="the funded trader">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a0a00;color:#e07b39">TFT</div><div><div class="firm-name">The Funded Trader</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD · Crypto</span><span class="badge badge-feat">Multi-comptes</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$129 – $599</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">90%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">12% · 6% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">7 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.3</span><span class="rating-count">/ 5 (900+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('tft')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- Apex -->
+    <div class="firm-card" data-market="futures" data-price="167" data-split="100" data-rating="4.5" data-name="apex trader funding">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a1628;color:#4a9eff">APX</div><div><div class="firm-name">Apex Trader Funding</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Futures uniquement</span><span class="badge badge-feat">100% profit split</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$167/mois</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">100%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">Trailing max loss</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">7 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.5</span><span class="rating-count">/ 5 (1 100+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('apex')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- E8 Funding -->
+    <div class="firm-card" data-market="forex" data-price="118" data-split="80" data-rating="4.2" data-name="e8 funding">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a1a0a;color:#4caf50">E8</div><div><div class="firm-name">E8 Funding</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Règles souples</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$118 – $588</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">80%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">8% · 4% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">14 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.2</span><span class="rating-count">/ 5 (650+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('e8')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- MyFundedFX -->
+    <div class="firm-card" data-market="forex" data-price="59" data-split="85" data-rating="4.1" data-name="myfundedfx">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a0a1a;color:#c084fc">MF</div><div><div class="firm-name">MyFundedFX</div><div class="firm-country">🇨🇿 République Tchèque</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Remboursement frais</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$59 – $399</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">85%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">10% · 5% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">8 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.1</span><span class="rating-count">/ 5 (500+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('myfundedfx')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- True Forex Funds -->
+    <div class="firm-card" data-market="forex" data-price="49" data-split="80" data-rating="4.0" data-name="true forex funds">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#001a10;color:#00c875">TFF</div><div><div class="firm-name">True Forex Funds</div><div class="firm-country">🇭🇺 Hongrie</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · Métaux</span><span class="badge badge-feat">Pas de news trading</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">€49 – €389</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">80%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">10% · 5% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">14 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.0</span><span class="rating-count">/ 5 (400+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('tff')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- Topstep -->
+    <div class="firm-card" data-market="futures" data-price="149" data-split="90" data-rating="4.4" data-name="topstep">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a0a20;color:#7b68ee">TOP</div><div><div class="firm-name">Topstep</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Futures uniquement</span><span class="badge badge-feat">Leader futures</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$149/mois</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">90%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">Trailing drawdown</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">7 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.4</span><span class="rating-count">/ 5 (1 300+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('topstep')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- Funding Pips -->
+    <div class="firm-card" data-market="forex" data-price="99" data-split="90" data-rating="4.2" data-name="funding pips">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a1a0a;color:#56db40">FP</div><div><div class="firm-name">Funding Pips</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">No time limit</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$99 – $799</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">90%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">8% · 4% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value green">24 heures</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.2</span><span class="rating-count">/ 5 (750+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('fundingpips')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- Bybit Funding -->
+    <div class="firm-card" data-market="crypto" data-price="99" data-split="85" data-rating="4.0" data-name="bybit funding">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a0a1a;color:#f7a600">BYB</div><div><div class="firm-name">Bybit Funding</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Crypto uniquement</span><span class="badge badge-feat">Exchange intégré</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$99 – $699</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">85%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">10% total</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value green">Instantané</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.0</span><span class="rating-count">/ 5 (600+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('bybit')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- Fidelcrest -->
+    <div class="firm-card" data-market="forex" data-price="99" data-split="90" data-rating="4.0" data-name="fidelcrest">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a0a05;color:#ff7043">FC</div><div><div class="firm-name">Fidelcrest</div><div class="firm-country">🇨🇾 Chypre</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Compte agressif</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">€99 – €999</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">90%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">20% (mode agressif)</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">14 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">4.0</span><span class="rating-count">/ 5 (450+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('fidelcrest')">Voir le détail →</button>
+      </div>
+    </div>
+
+    <!-- Lux Trading -->
+    <div class="firm-card" data-market="forex" data-price="250" data-split="75" data-rating="3.9" data-name="lux trading firm">
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a1500;color:#d4af37">LTF</div><div><div class="firm-name">Lux Trading Firm</div><div class="firm-country">🇬🇧 Royaume-Uni</div></div></div></div>
+      <div class="badges-row"><span class="badge badge-market">Forex · Actions</span><span class="badge badge-feat">Capital élevé</span></div>
+      <div class="metrics-grid">
+        <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$250 – $3 000</div></div>
+        <div class="metric"><div class="metric-label">Profit split max</div><div class="metric-value green">75%</div></div>
+        <div class="metric"><div class="metric-label">Drawdown max</div><div class="metric-value">10% · 5% / jour</div></div>
+        <div class="metric"><div class="metric-label">Délai paiement</div><div class="metric-value">14 jours</div></div>
+      </div>
+      <div class="rating-row">
+        <div style="display:flex;align-items:center;gap:4px">
+          <div class="stars">
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+            <svg class="star empty" viewBox="0 0 14 14"><polygon points="7,1 9,5 13,5.5 10,8.5 11,13 7,10.5 3,13 4,8.5 1,5.5 5,5"/></svg>
+          </div>
+          <span class="rating-num">3.9</span><span class="rating-count">/ 5 (300+ avis)</span>
+        </div>
+        <button class="card-cta" onclick="openFirmModal('lux')">Voir le détail →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<div class="section-title-area" id="tableau">
+  <div class="section-label">Tableau comparatif</div>
+  <div class="section-title">Toutes les données côte à côte</div>
+</div>
+<div class="table-wrapper">
+  <table>
+    <thead><tr>
+      <th>Prop firm</th><th>Prix min</th><th>Compte max</th><th>Profit split</th><th>Drawdown max</th><th>Remboursement</th><th>Week-end</th><th>Paiement</th><th>Note</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>FTMO</td><td class="td-gold">€155</td><td>€400 000</td><td class="td-green">90%</td><td>10% / 5%</td><td class="check">✓</td><td class="check">✓</td><td>14 jours</td><td class="td-gold">4.8 ★</td></tr>
+      <tr><td>FundedNext</td><td class="td-gold">$49</td><td>$200 000</td><td class="td-green">95%</td><td>10% / 5%</td><td class="check">✓</td><td class="check">✓</td><td class="td-green">24h</td><td class="td-gold">4.7 ★</td></tr>
+      <tr><td>Topstep</td><td class="td-gold">$149/m</td><td>$150 000</td><td class="td-green">90%</td><td>Trailing</td><td class="cross">—</td><td class="cross">—</td><td>7 jours</td><td>4.4 ★</td></tr>
+      <tr><td>Apex Trader Funding</td><td class="td-gold">$167/m</td><td>$300 000</td><td class="td-green">100%</td><td>Trailing</td><td class="cross">—</td><td class="cross">—</td><td>7 jours</td><td>4.5 ★</td></tr>
+      <tr><td>The Funded Trader</td><td class="td-gold">$129</td><td>$600 000</td><td class="td-green">90%</td><td>12% / 6%</td><td class="check">✓</td><td class="check">✓</td><td>7 jours</td><td>4.3 ★</td></tr>
+      <tr><td>E8 Funding</td><td class="td-gold">$118</td><td>$250 000</td><td class="td-green">80%</td><td>8% / 4%</td><td class="check">✓</td><td class="cross">—</td><td>14 jours</td><td>4.2 ★</td></tr>
+      <tr><td>Funding Pips</td><td class="td-gold">$99</td><td>$200 000</td><td class="td-green">90%</td><td>8% / 4%</td><td class="check">✓</td><td class="check">✓</td><td class="td-green">24h</td><td>4.2 ★</td></tr>
+      <tr><td>MyFundedFX</td><td class="td-gold">$59</td><td>$200 000</td><td class="td-green">85%</td><td>10% / 5%</td><td class="check">✓</td><td class="check">✓</td><td>8 jours</td><td>4.1 ★</td></tr>
+      <tr><td>True Forex Funds</td><td class="td-gold">€49</td><td>€200 000</td><td class="td-green">80%</td><td>10% / 5%</td><td class="check">✓</td><td class="cross">—</td><td>14 jours</td><td>4.0 ★</td></tr>
+      <tr><td>Fidelcrest</td><td class="td-gold">€99</td><td>€2 000 000</td><td class="td-green">90%</td><td>20% (agressif)</td><td class="check">✓</td><td class="check">✓</td><td>14 jours</td><td>4.0 ★</td></tr>
+      <tr><td>Bybit Funding</td><td class="td-gold">$99</td><td>$100 000</td><td class="td-green">85%</td><td>10%</td><td class="cross">—</td><td class="check">✓</td><td class="td-green">Instant</td><td>4.0 ★</td></tr>
+      <tr><td>Lux Trading Firm</td><td class="td-gold">$250</td><td>$10 000 000</td><td>75%</td><td>10% / 5%</td><td class="cross">—</td><td class="check">✓</td><td>14 jours</td><td>3.9 ★</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- GUIDE -->
+<section class="guide-section" id="guide">
+  <div class="guide-inner">
+    <div>
+      <div class="section-label">Guide du débutant</div>
+      <h2 class="guide-title">Comment choisir<br>sa prop firm ?</h2>
+      <p class="guide-intro">Le marché des prop firms a explosé. Voici les critères essentiels pour ne pas se tromper et maximiser vos chances de réussite.</p>
+      <div class="guide-items">
+        <div class="guide-item"><div class="guide-num">1</div><div><div class="guide-item-title">Commencez par le prix, pas le capital</div><div class="guide-item-text">Un compte à $200k à $600 de challenge ne vaut rien si vous échouez. Commencez avec le challenge le moins cher pour vous entraîner.</div></div></div>
+        <div class="guide-item"><div class="guide-num">2</div><div><div class="guide-item-title">Vérifiez la réputation sur Trustpilot</div><div class="guide-item-text">Avant toute chose, lisez les avis récents. Des prop firms ont fermé du jour au lendemain sans prévenir. Méfiez-vous des notes gonflées artificiellement.</div></div></div>
+        <div class="guide-item"><div class="guide-num">3</div><div><div class="guide-item-title">Drawdown relatif vs absolu</div><div class="guide-item-text">Un drawdown relatif (trailing) est bien plus restrictif qu'un drawdown absolu. Apex et Topstep utilisent le trailing — vérifiez toujours ce détail avant de vous inscrire.</div></div></div>
+        <div class="guide-item"><div class="guide-num">4</div><div><div class="guide-item-title">Le profit split réel, pas marketing</div><div class="guide-item-text">95% de profit split avec des frais de plateforme de $200/mois peut être moins rentable que 80% sans frais. Calculez le revenu net, pas le pourcentage brut.</div></div></div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:16px">Glossaire essentiel</div>
+      <div class="glossary">
+        <div class="gloss-item"><div class="gloss-term">Drawdown maximum</div><div class="gloss-def">Perte maximale autorisée avant désactivation du compte. Ex : 10% sur un compte $10k = $1 000 de perte max.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Profit split</div><div class="gloss-def">Pourcentage des gains que vous conservez. À 80% de split sur $1 000 de profit, vous recevez $800.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Challenge / Évaluation</div><div class="gloss-def">Phase de test payante où vous devez atteindre un objectif de profit tout en respectant les règles de gestion du risque.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Compte financé</div><div class="gloss-def">Compte de trading virtuel mis à votre disposition après avoir réussi le challenge. Vous tradez avec le capital simulé de la firme.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Scaling plan</div><div class="gloss-def">Mécanisme permettant d'augmenter la taille de votre compte en fonction de vos performances. Certaines firmes proposent jusqu'à x4 le capital initial.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="footer-wrapper">
+  <footer>
+    <div class="footer-logo">Prop<span>Compare</span></div>
+    <p class="footer-text">PropCompare est un comparateur indépendant. Les liens présents peuvent être des liens d'affiliation — nous percevons une commission si vous souscrivez via nos liens, sans coût supplémentaire pour vous. Les données sont mises à jour régulièrement.</p>
+    <div class="footer-links">
+      <a onclick="openModal('legalModal')">Mentions légales</a>
+      <a onclick="openModal('contactModal')">Contact</a>
+      <a onclick="openModal('submitModal')">Soumettre une firm</a>
+    </div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     MODALS
+═══════════════════════════════════════════════════════ -->
+
+<!-- FIRM DETAIL MODAL -->
+<div class="modal-overlay" id="firmModal" onclick="handleOverlayClick(event,'firmModal')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="firm-icon" id="mIcon" style="width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;"></div>
+        <div>
+          <div class="modal-title" id="mTitle"></div>
+          <div class="modal-sub" id="mSub"></div>
+        </div>
+      </div>
+      <button class="modal-close" onclick="closeModal('firmModal')">✕</button>
+    </div>
+    <div class="modal-body" id="firmModalBody"></div>
+  </div>
+</div>
+
+<!-- SUBMIT MODAL -->
+<div class="modal-overlay" id="submitModal" onclick="handleOverlayClick(event,'submitModal')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div><div class="modal-title">Soumettre une prop firm</div><div class="modal-sub">Faites référencer votre firma gratuitement</div></div>
+      <button class="modal-close" onclick="closeModal('submitModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="submitForm">
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Nom de la prop firm *</label><input type="text" class="form-input" placeholder="ex. MonTradingFund"></div>
+          <div class="form-group"><label class="form-label">Site web *</label><input type="url" class="form-input" placeholder="https://..."></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Marchés proposés *</label>
+            <select class="form-select">
+              <option value="">Sélectionner...</option>
+              <option>Forex / CFD</option><option>Futures</option><option>Crypto</option><option>Multi-actifs</option>
+            </select>
+          </div>
+          <div class="form-group"><label class="form-label">Prix du challenge (min) *</label><input type="text" class="form-input" placeholder="ex. €99"></div>
+        </div>
+        <div class="form-grid">
+          <div class="form-group"><label class="form-label">Profit split max *</label><input type="text" class="form-input" placeholder="ex. 85%"></div>
+          <div class="form-group"><label class="form-label">Drawdown maximum *</label><input type="text" class="form-input" placeholder="ex. 10% / 5% jour"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Votre email (pour suivi) *</label><input type="email" class="form-input" placeholder="contact@vosociete.com"></div>
+        <div class="form-group"><label class="form-label">Informations complémentaires</label><textarea class="form-textarea" placeholder="Particularités de votre offre, programme d'affiliation disponible, etc."></textarea></div>
+        <div class="modal-cta-row" style="padding-top:16px;border-top:1px solid var(--border);">
+          <button class="modal-btn-primary" onclick="submitFirm()">Envoyer la demande</button>
+          <button class="modal-btn-sec" onclick="closeModal('submitModal')">Annuler</button>
+        </div>
+        <p class="form-note">Nous examinons chaque demande sous 48h. L'ajout est gratuit et sans engagement. Les firmes présentant un programme d'affiliation sont prioritaires.</p>
+      </div>
+      <div id="submitSuccess" class="hidden form-success">
+        <div class="form-success-icon">✅</div>
+        <div class="form-success-title">Demande envoyée !</div>
+        <p class="form-success-text">Nous avons bien reçu votre demande. Notre équipe l'examine et vous répondra sous 48 heures ouvrées à l'adresse indiquée.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MENTIONS LÉGALES MODAL -->
+<div class="modal-overlay" id="legalModal" onclick="handleOverlayClick(event,'legalModal')">
+  <div class="modal-box" style="max-width:720px">
+    <div class="modal-header">
+      <div><div class="modal-title">Mentions légales</div><div class="modal-sub">Dernière mise à jour : avril 2026</div></div>
+      <button class="modal-close" onclick="closeModal('legalModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="legal-content">
+        <h3>Éditeur du site</h3>
+        <p><strong>PropCompare</strong> est un site comparateur indépendant, exploité à titre personnel ou sous la forme d'une micro-entreprise. Pour toute question, contactez-nous à l'adresse : <a href="mailto:contact@propcompare.fr">contact@propcompare.fr</a>.</p>
+
+        <h3>Hébergement</h3>
+        <p>Ce site est hébergé par un prestataire tiers (Netlify, GitHub Pages ou équivalent). L'hébergeur ne saurait être tenu responsable du contenu éditorial publié sur ce site.</p>
+
+        <h3>Liens d'affiliation</h3>
+        <p>PropCompare participe à des programmes d'affiliation avec les prop firms référencées. Cela signifie que :</p>
+        <ul>
+          <li>Certains liens présents sur ce site sont des liens d'affiliation.</li>
+          <li>Si vous cliquez sur un lien et souscrivez un service, PropCompare peut percevoir une commission.</li>
+          <li>Cette commission n'engendre <strong>aucun coût supplémentaire</strong> pour vous.</li>
+          <li>Elle n'influence pas notre notation ou notre classement des prop firms.</li>
+        </ul>
+
+        <h3>Indépendance éditoriale</h3>
+        <p>Les notes, avis et comparaisons publiés sur PropCompare sont établis de façon indépendante, sur la base de critères objectifs (prix, règles, délais de paiement, avis Trustpilot). Aucune prop firm ne peut acheter une meilleure notation.</p>
+
+        <h3>Exactitude des informations</h3>
+        <p>PropCompare s'efforce de maintenir des informations à jour. Cependant, les conditions des prop firms peuvent évoluer à tout moment. Nous vous recommandons de toujours vérifier les informations directement sur le site officiel de la prop firm avant toute souscription.</p>
+
+        <h3>Avertissement sur les risques</h3>
+        <p><strong>Le trading de produits financiers comporte un risque élevé de perte en capital.</strong> Les prop firms présentées sur ce site proposent des comptes de trading simulés (capital virtuel). Même si votre propre capital n'est pas directement mis en jeu lors des challenges, les frais de participation sont non remboursables en cas d'échec (sauf mention contraire de la firme concernée). PropCompare ne fournit aucun conseil en investissement.</p>
+
+        <h3>Protection des données personnelles (RGPD)</h3>
+        <p>PropCompare ne collecte pas de données personnelles sans votre consentement explicite. Les seules données éventuellement collectées sont celles que vous fournissez volontairement via le formulaire de soumission de prop firm (adresse email et informations professionnelles). Ces données ne sont pas partagées avec des tiers à des fins commerciales.</p>
+        <p>Conformément au RGPD, vous disposez d'un droit d'accès, de rectification et de suppression de vos données. Pour exercer ce droit : <a href="mailto:contact@propcompare.fr">contact@propcompare.fr</a>.</p>
+
+        <h3>Cookies</h3>
+        <p>Ce site peut utiliser des cookies d'analyse d'audience (type Google Analytics) afin d'améliorer l'expérience utilisateur. Aucun cookie publicitaire n'est déposé sans votre consentement.</p>
+
+        <h3>Propriété intellectuelle</h3>
+        <p>L'ensemble du contenu de ce site (textes, design, code) est la propriété exclusive de PropCompare. Toute reproduction partielle ou totale sans autorisation écrite est interdite.</p>
+
+        <h3>Droit applicable</h3>
+        <p>Le présent site est soumis au droit français. En cas de litige, les tribunaux compétents sont ceux du ressort du siège de l'éditeur.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT MODAL -->
+<div class="modal-overlay" id="contactModal" onclick="handleOverlayClick(event,'contactModal')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div><div class="modal-title">Nous contacter</div><div class="modal-sub">Partenariats, signalement d'erreur, presse</div></div>
+      <button class="modal-close" onclick="closeModal('contactModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p class="contact-intro">Vous avez détecté une information incorrecte ? Vous souhaitez proposer un partenariat ou discuter d'affiliation ? Voici comment nous joindre.</p>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card-icon">✉️</div>
+          <div class="contact-card-title">Email général</div>
+          <div class="contact-card-text">Toute demande, du lundi au vendredi</div>
+          <a href="mailto:contact@propcompare.fr" class="contact-card-link">contact@propcompare.fr</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">🤝</div>
+          <div class="contact-card-title">Partenariats & affiliation</div>
+          <div class="contact-card-text">Pour les prop firms souhaitant être référencées</div>
+          <a href="mailto:partenaires@propcompare.fr" class="contact-card-link">partenaires@propcompare.fr</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">🐛</div>
+          <div class="contact-card-title">Signaler une erreur</div>
+          <div class="contact-card-text">Une donnée incorrecte ou obsolète ?</div>
+          <a href="mailto:erreur@propcompare.fr" class="contact-card-link">erreur@propcompare.fr</a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">📰</div>
+          <div class="contact-card-title">Presse & médias</div>
+          <div class="contact-card-text">Demandes journalistiques et interviews</div>
+          <a href="mailto:presse@propcompare.fr" class="contact-card-link">presse@propcompare.fr</a>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Ou envoyez-nous un message direct</label><textarea class="form-textarea" id="contactMsg" placeholder="Décrivez votre demande…"></textarea></div>
+      <div class="form-group"><input type="email" class="form-input" id="contactEmail" placeholder="Votre adresse email pour qu'on vous réponde"></div>
+      <button class="modal-btn-primary" style="width:100%" onclick="sendContact()">Envoyer le message</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────
+const firms = {
+  ftmo: {
+    icon: 'FTMO', iconStyle: 'background:#1a1a2e;color:#6c8ebf',
+    name: 'FTMO', country: '🇨🇿 République Tchèque',
+    rating: '4.8', reviews: '2 400+',
+    verdict: 'La référence absolue du secteur. FTMO a défini les standards du challenge 2 étapes. Idéal pour les traders Forex/CFD confirmés qui veulent accéder à des comptes jusqu\'à €400k. Le délai de paiement de 14 jours est le seul point à améliorer.',
+    scores: [{v:'90%',l:'Profit split'},{v:'€155',l:'Prix min'},{v:'€400k',l:'Capital max'},{v:'4.8★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes'],['Objectif phase 1','10% de profit'],['Objectif phase 2','5% de profit'],
+      ['Drawdown total','10%'],['Drawdown journalier','5%'],['Durée min phase 1','10 jours'],
+      ['Durée min phase 2','10 jours'],['Délai paiement','14 jours'],
+      ['Plateformes','MT4 / MT5'],['Actifs','Forex, indices, métaux, crypto'],
+      ['Trading weekend','Autorisé'],['News trading','Autorisé'],
+      ['Remboursement frais','Oui (au 1er paiement)'],['Scaling plan','Jusqu\'à €2 000 000']
+    ],
+    pros: ['Marque la plus reconnue','Communauté massive & ressources','Règles claires et prévisibles','Remboursement des frais garanti'],
+    cons: ['Délai de paiement 14 jours','Prix plus élevé que la concurrence','Règles strictes sur le min trading days']
+  },
+  fundednext: {
+    icon: 'FN', iconStyle: 'background:#0f2027;color:#00b4d8',
+    name: 'FundedNext', country: '🇦🇪 Émirats Arabes Unis',
+    rating: '4.7', reviews: '1 800+',
+    verdict: 'Le meilleur rapport qualité/prix du comparateur. Avec un paiement en 24h, 95% de profit split et des challenges dès $49, FundedNext s\'impose comme l\'alternative sérieuse à FTMO pour les traders forex cherchant à maximiser leurs gains nets.',
+    scores: [{v:'95%',l:'Profit split'},{v:'$49',l:'Prix min'},{v:'$200k',l:'Capital max'},{v:'4.7★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes ou 1 étape'],['Objectif phase 1','10% de profit'],['Objectif phase 2','5% de profit'],
+      ['Drawdown total','10%'],['Drawdown journalier','5%'],['Durée min','Aucune'],
+      ['Délai paiement','24 heures'],['Plateformes','MT4 / MT5 / cTrader'],
+      ['Actifs','Forex, indices, métaux, crypto'],['Trading weekend','Autorisé'],
+      ['News trading','Autorisé'],['Remboursement frais','Oui'],['Scaling plan','Jusqu\'à $4 000 000']
+    ],
+    pros: ['Paiement le plus rapide (24h)','Profit split le plus élevé (95%)','Prix d\'entrée très accessible ($49)','Scaling jusqu\'à $4M'],
+    cons: ['Moins établi que FTMO','Support parfois lent','Drawdown strict (5% / jour)']
+  },
+  tft: {
+    icon: 'TFT', iconStyle: 'background:#1a0a00;color:#e07b39',
+    name: 'The Funded Trader', country: '🇺🇸 États-Unis',
+    rating: '4.3', reviews: '900+',
+    verdict: 'Bon compromis pour les traders qui veulent plus de flexibilité sur le drawdown (12% total vs 10% chez la concurrence). La possibilité d\'ouvrir plusieurs comptes simultanément est un avantage pour diversifier son risque.',
+    scores: [{v:'90%',l:'Profit split'},{v:'$129',l:'Prix min'},{v:'$600k',l:'Capital max'},{v:'4.3★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes ou Royal (1 étape)'],['Objectif phase 1','10% de profit'],
+      ['Drawdown total','12%'],['Drawdown journalier','6%'],['Délai paiement','7 jours'],
+      ['Plateformes','MT4 / MT5'],['Actifs','Forex, CFD, crypto'],
+      ['Trading weekend','Autorisé'],['News trading','Autorisé'],
+      ['Remboursement frais','Oui'],['Scaling plan','Jusqu\'à $1 500 000']
+    ],
+    pros: ['Drawdown plus souple (12%)','Multi-comptes autorisé','Capital max élevé ($600k)','Paiement en 7 jours'],
+    cons: ['Prix légèrement élevé pour le $10k','Moins connu en France','Quelques avis négatifs sur le support']
+  },
+  apex: {
+    icon: 'APX', iconStyle: 'background:#0a1628;color:#4a9eff',
+    name: 'Apex Trader Funding', country: '🇺🇸 États-Unis',
+    rating: '4.5', reviews: '1 100+',
+    verdict: 'Le leader incontesté des prop firms futures. Le 100% de profit split sur les premiers $25k de gains est unique sur le marché. À recommander uniquement aux traders spécialisés en contrats futures (ES, NQ, CL…), ce n\'est pas adapté au Forex.',
+    scores: [{v:'100%',l:'Profit split'},{v:'$167/m',l:'Prix min'},{v:'$300k',l:'Capital max'},{v:'4.5★',l:'Note'}],
+    details: [
+      ['Marchés','Futures uniquement (CME)'],['Actifs','ES, NQ, CL, GC, YM, etc.'],
+      ['Profit split','100% (premiers $25k) puis 90%'],['Type drawdown','Trailing (évolue avec les gains)'],
+      ['Objectif de profit','Variable selon le compte'],['Délai paiement','7 jours'],
+      ['Plateforme','NinjaTrader, Tradovate, Rithmic'],['Trading weekend','Non (marchés fermés)'],
+      ['News trading','Autorisé'],['Comptes simultanés','Jusqu\'à 20']
+    ],
+    pros: ['100% profit split (premier $25k)','Jusqu\'à 20 comptes simultanés','Leader reconnu futures','Nombreuses promos régulières'],
+    cons: ['Futures uniquement (pas de Forex)','Trailing drawdown complexe pour débutants','Frais mensuels (pas one-shot)']
+  },
+  e8: {
+    icon: 'E8', iconStyle: 'background:#0a1a0a;color:#4caf50',
+    name: 'E8 Funding', country: '🇺🇸 États-Unis',
+    rating: '4.2', reviews: '650+',
+    verdict: 'Bon choix pour les traders qui cherchent des règles légèrement plus souples sur le drawdown journalier (4% vs 5%). Le programme de scaling est solide et le support est réputé réactif. Prix raisonnable pour le niveau de service.',
+    scores: [{v:'80%',l:'Profit split'},{v:'$118',l:'Prix min'},{v:'$250k',l:'Capital max'},{v:'4.2★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes'],['Objectif phase 1','8% de profit'],['Objectif phase 2','5% de profit'],
+      ['Drawdown total','8%'],['Drawdown journalier','4%'],['Délai paiement','14 jours'],
+      ['Plateformes','MT4 / MT5'],['Actifs','Forex, indices, métaux'],
+      ['Trading weekend','Non'],['News trading','Autorisé avec règles'],
+      ['Remboursement frais','Oui'],['Scaling plan','Jusqu\'à $250 000']
+    ],
+    pros: ['Objectif de profit raisonnable (8%)','Support réactif','Drawdown journalier souple (4%)','Bonne réputation paiements'],
+    cons: ['Profit split limité à 80%','Pas de trading le weekend','Capital max moins élevé']
+  },
+  myfundedfx: {
+    icon: 'MF', iconStyle: 'background:#1a0a1a;color:#c084fc',
+    name: 'MyFundedFX', country: '🇨🇿 République Tchèque',
+    rating: '4.1', reviews: '500+',
+    verdict: 'Option solide pour les petits budgets. Le challenge à $59 est l\'un des plus abordables du marché tout en offrant 85% de profit split. Bon choix pour tester la prop firm sans risquer un budget important.',
+    scores: [{v:'85%',l:'Profit split'},{v:'$59',l:'Prix min'},{v:'$200k',l:'Capital max'},{v:'4.1★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes ou 1 étape'],['Objectif phase 1','10% de profit'],
+      ['Drawdown total','10%'],['Drawdown journalier','5%'],['Délai paiement','8 jours'],
+      ['Plateformes','MT4 / MT5'],['Actifs','Forex, CFD'],
+      ['Trading weekend','Autorisé'],['News trading','Autorisé'],
+      ['Remboursement frais','Oui (premier paiement)'],['Scaling','Oui']
+    ],
+    pros: ['Prix d\'entrée très bas ($59)','Remboursement des frais','Trading weekend autorisé','Bonne réputation paiements'],
+    cons: ['Moins connu que FTMO','Communauté plus petite','Ressources éducatives limitées']
+  },
+  tff: {
+    icon: 'TFF', iconStyle: 'background:#001a10;color:#00c875',
+    name: 'True Forex Funds', country: '🇭🇺 Hongrie',
+    rating: '4.0', reviews: '400+',
+    verdict: 'Le moins cher du comparateur à €49 pour un compte €10k. Idéal pour les traders débutants avec peu de budget. Attention : le trading pendant les news est interdit, ce qui peut limiter certaines stratégies.',
+    scores: [{v:'80%',l:'Profit split'},{v:'€49',l:'Prix min'},{v:'€200k',l:'Capital max'},{v:'4.0★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes'],['Objectif phase 1','10% de profit'],['Objectif phase 2','5% de profit'],
+      ['Drawdown total','10%'],['Drawdown journalier','5%'],['Délai paiement','14 jours'],
+      ['Plateformes','MT4 / MT5'],['Actifs','Forex, métaux'],
+      ['Trading weekend','Non'],['News trading','Interdit'],
+      ['Remboursement frais','Oui'],['Scaling plan','Limité']
+    ],
+    pros: ['Prix le plus bas du comparateur (€49)','En euros (pas de conversion)','Remboursement des frais'],
+    cons: ['News trading interdit','Pas de trading weekend','Scaling plan limité','Moins de marchés disponibles']
+  },
+  topstep: {
+    icon: 'TOP', iconStyle: 'background:#0a0a20;color:#7b68ee',
+    name: 'Topstep', country: '🇺🇸 États-Unis',
+    rating: '4.4', reviews: '1 300+',
+    verdict: 'La référence historique des prop firms futures, fondée en 2012. Excellente réputation, plateforme robuste, mais le trailing drawdown peut surprendre les nouveaux traders. Recommandé aux traders futures expérimentés.',
+    scores: [{v:'90%',l:'Profit split'},{v:'$149/m',l:'Prix min'},{v:'$150k',l:'Capital max'},{v:'4.4★',l:'Note'}],
+    details: [
+      ['Marchés','Futures (CME Group)'],['Actifs','ES, NQ, CL, 6E, ZB, etc.'],
+      ['Profit split','90% (50% premier retrait)'],['Type drawdown','Trailing (suivi des gains)'],
+      ['Délai paiement','7 jours'],['Plateforme','NinjaTrader, Tradovate, Sierra Chart'],
+      ['Trading weekend','Non'],['Comptes max','5 simultanés'],['Fondée en','2012']
+    ],
+    pros: ['Ancienneté & fiabilité prouvée (depuis 2012)','Excellent support client','Large choix de plateformes','Communauté active'],
+    cons: ['Futures uniquement','Frais mensuels (pas one-shot)','Capital max limité à $150k','Trailing drawdown complexe']
+  },
+  fundingpips: {
+    icon: 'FP', iconStyle: 'background:#0a1a0a;color:#56db40',
+    name: 'Funding Pips', country: '🇦🇪 Émirats Arabes Unis',
+    rating: '4.2', reviews: '750+',
+    verdict: 'Excellente option pour les traders qui veulent de la flexibilité : pas de limite de temps, paiement en 24h, et 90% de profit split. Les règles de drawdown (8%/4%) sont un peu plus strictes mais compensées par l\'absence de délai.',
+    scores: [{v:'90%',l:'Profit split'},{v:'$99',l:'Prix min'},{v:'$200k',l:'Capital max'},{v:'4.2★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes'],['Objectif phase 1','8% de profit'],['Objectif phase 2','5% de profit'],
+      ['Drawdown total','8%'],['Drawdown journalier','4%'],['Limite de temps','Aucune'],
+      ['Délai paiement','24 heures'],['Plateformes','MT4 / MT5'],
+      ['Actifs','Forex, CFD, indices'],['Trading weekend','Autorisé'],
+      ['News trading','Autorisé'],['Remboursement frais','Oui']
+    ],
+    pros: ['Aucune limite de temps','Paiement en 24 heures','90% profit split','Trading weekend autorisé'],
+    cons: ['Drawdown strict (8% total)','Moins connu en Europe','Capital max de $200k']
+  },
+  bybit: {
+    icon: 'BYB', iconStyle: 'background:#0a0a1a;color:#f7a600',
+    name: 'Bybit Funding', country: '🇦🇪 Émirats Arabes Unis',
+    rating: '4.0', reviews: '600+',
+    verdict: 'La meilleure option pour les traders crypto. L\'intégration native avec l\'exchange Bybit et les paiements instantanés sont de vrais atouts. À réserver aux traders spécialisés en crypto ; pour le Forex, préférez FTMO ou FundedNext.',
+    scores: [{v:'85%',l:'Profit split'},{v:'$99',l:'Prix min'},{v:'$100k',l:'Capital max'},{v:'4.0★',l:'Note'}],
+    details: [
+      ['Marchés','Crypto uniquement'],['Actifs','BTC, ETH, SOL, et 100+ altcoins'],
+      ['Profit split','85%'],['Drawdown total','10%'],['Drawdown journalier','Non spécifié'],
+      ['Délai paiement','Instantané (USDT)'],['Plateforme','Bybit native'],
+      ['Trading weekend','Oui (marchés 24/7)'],['News trading','Autorisé'],['Levier','Jusqu\'à 100x']
+    ],
+    pros: ['Paiements instantanés en USDT','Trading 24/7 (crypto ne ferme pas)','Intégration exchange complète','Levier élevé disponible'],
+    cons: ['Crypto uniquement (pas de Forex)','Capital max limité ($100k)','Exposition à la volatilité crypto','Réglementation plus floue']
+  },
+  fidelcrest: {
+    icon: 'FC', iconStyle: 'background:#1a0a05;color:#ff7043',
+    name: 'Fidelcrest', country: '🇨🇾 Chypre',
+    rating: '4.0', reviews: '450+',
+    verdict: 'Unique sur le marché avec son mode "compte agressif" à 20% de drawdown max. Parfait pour les traders qui ont une stratégie à forte variance et ont besoin de plus d\'espace de manœuvre. Le compte max de €2M est l\'un des plus élevés du secteur.',
+    scores: [{v:'90%',l:'Profit split'},{v:'€99',l:'Prix min'},{v:'€2M',l:'Capital max'},{v:'4.0★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes (Normal ou Agressif)'],['Objectif phase 1 (normal)','10%'],['Objectif phase 1 (agressif)','20%'],
+      ['Drawdown normal','10% total / 5% jour'],['Drawdown agressif','20% total / 10% jour'],
+      ['Délai paiement','14 jours'],['Plateformes','MT4 / MT5'],
+      ['Actifs','Forex, indices, actions, crypto'],['Trading weekend','Autorisé'],
+      ['News trading','Autorisé'],['Remboursement frais','Oui'],['Capital max','€2 000 000']
+    ],
+    pros: ['Mode agressif unique (20% drawdown)','Capital max très élevé (€2M)','90% profit split','Actions incluses (rare)'],
+    cons: ['Objectif élevé en mode agressif (20%)','Moins connu que FTMO','Paiement 14 jours']
+  },
+  lux: {
+    icon: 'LTF', iconStyle: 'background:#1a1500;color:#d4af37',
+    name: 'Lux Trading Firm', country: '🇬🇧 Royaume-Uni',
+    rating: '3.9', reviews: '300+',
+    verdict: 'Réservé aux traders expérimentés cherchant des comptes très importants (jusqu\'à $10M). Le profit split de 75% est le plus faible du comparateur, mais le capital accessible est sans égal. À considérer uniquement si vous avez un track record prouvé.',
+    scores: [{v:'75%',l:'Profit split'},{v:'$250',l:'Prix min'},{v:'$10M',l:'Capital max'},{v:'3.9★',l:'Note'}],
+    details: [
+      ['Type de challenge','2 étapes'],['Objectif phase 1','10% de profit'],
+      ['Drawdown total','10%'],['Drawdown journalier','5%'],['Délai paiement','14 jours'],
+      ['Plateformes','MT4 / MT5'],['Actifs','Forex, indices, actions UK/US'],
+      ['Trading weekend','Autorisé'],['News trading','Autorisé'],
+      ['Remboursement frais','Non'],['Capital max','$10 000 000']
+    ],
+    pros: ['Capital max unique ($10M)','Actions UK/US disponibles','Basé au Royaume-Uni (fiable)','Adapté aux gros traders'],
+    cons: ['Profit split le plus faible (75%)','Prix élevé ($250 min)','Pas de remboursement des frais','Note plus basse que la moyenne']
+  }
+};
+
+// ── FILTERS ────────────────────────────────────────────────────
+let currentMarket = 'all';
+function filterMarket(btn, market) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMarket = market;
+  applyFilters();
+}
+function sortCards(value) {
+  const grid = document.getElementById('cardsGrid');
+  const cards = Array.from(grid.querySelectorAll('.firm-card'));
+  cards.sort((a, b) => {
+    if (value === 'rating') return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+    if (value === 'price') return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+    if (value === 'split') return parseFloat(b.dataset.split) - parseFloat(a.dataset.split);
+  });
+  cards.forEach(c => grid.appendChild(c));
+  applyFilters();
+}
+function searchCards(query) { applyFilters(query.toLowerCase()); }
+function applyFilters(query = '') {
+  const cards = document.querySelectorAll('.firm-card');
+  let visible = 0;
+  cards.forEach(card => {
+    const marketOk = currentMarket === 'all' || card.dataset.market === currentMarket;
+    const searchOk = !query || card.dataset.name.includes(query);
+    card.classList.toggle('hidden', !(marketOk && searchOk));
+    if (marketOk && searchOk) visible++;
+  });
+  document.getElementById('count').textContent = visible;
+}
+
+// ── MODAL ENGINE ───────────────────────────────────────────────
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+function handleOverlayClick(e, id) {
+  if (e.target === document.getElementById(id)) closeModal(id);
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => {
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  }
+});
+
+// ── FIRM MODAL ─────────────────────────────────────────────────
+function openFirmModal(key) {
+  const f = firms[key];
+  if (!f) return;
+  document.getElementById('mIcon').style.cssText = f.iconStyle + ';width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;letter-spacing:0.04em;';
+  document.getElementById('mIcon').textContent = f.icon;
+  document.getElementById('mTitle').textContent = f.name;
+  document.getElementById('mSub').textContent = f.country + ' · Note : ' + f.rating + '/5 (' + f.reviews + ' avis)';
+
+  const scoresHtml = f.scores.map(s => `<div class="score-item"><div class="score-val">${s.v}</div><div class="score-lbl">${s.l}</div></div>`).join('');
+  const detailsHtml = f.details.map(([k,v]) => `<div class="detail-row"><span class="detail-key">${k}</span><span class="detail-val">${v}</span></div>`).join('');
+  const prosHtml = f.pros.map(p => `<div class="pc-item"><span class="pc-dot"></span>${p}</div>`).join('');
+  const consHtml = f.cons.map(c => `<div class="pc-item"><span class="pc-dot"></span>${c}</div>`).join('');
+
+  document.getElementById('firmModalBody').innerHTML = `
+    <div class="firm-score-banner">${scoresHtml}</div>
+    <div class="verdict-box"><div class="verdict-label">Notre verdict</div><div class="verdict-text">${f.verdict}</div></div>
+    <div class="modal-section"><div class="modal-section-title">Détail des conditions</div><div class="detail-grid">${detailsHtml}</div></div>
+    <div class="modal-section"><div class="modal-section-title">Points forts & points faibles</div>
+      <div class="pros-cons">
+        <div class="pros-box"><div class="pc-title">Points forts</div>${prosHtml}</div>
+        <div class="cons-box"><div class="pc-title">Points faibles</div>${consHtml}</div>
+      </div>
+    </div>
+    <div class="modal-cta-row">
+      <button class="modal-btn-primary" onclick="alert('Lien d\\'affiliation à configurer pour ${f.name}')">Accéder à ${f.name} →</button>
+      <button class="modal-btn-sec" onclick="closeModal('firmModal')">Fermer</button>
+    </div>
+  `;
+  openModal('firmModal');
+}
+
+// ── SUBMIT ─────────────────────────────────────────────────────
+function submitFirm() {
+  document.getElementById('submitForm').classList.add('hidden');
+  document.getElementById('submitSuccess').classList.remove('hidden');
+}
+
+// ── CONTACT ────────────────────────────────────────────────────
+function sendContact() {
+  const msg = document.getElementById('contactMsg').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  if (!msg || !email) { alert('Veuillez remplir votre email et votre message.'); return; }
+  closeModal('contactModal');
+  setTimeout(() => alert('Message envoyé ! Nous vous répondrons sous 48h.'), 200);
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+</body>
+</html>
