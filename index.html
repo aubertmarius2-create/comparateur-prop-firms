@@ -71,7 +71,8 @@
   .firm-card.featured::before { background: var(--gold); }
   .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
   .firm-logo-area { display: flex; align-items: center; gap: 12px; }
-  .firm-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; letter-spacing: 0.04em; }
+  .firm-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; letter-spacing: 0.04em; overflow: hidden; }
+  .firm-icon img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; padding: 4px; }
   .firm-name { font-family: 'DM Serif Display', serif; font-size: 1.15rem; color: var(--text); line-height: 1.2; }
   .firm-country { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
   .badges-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
@@ -289,7 +290,7 @@
 
     <!-- FTMO -->
     <div class="firm-card featured" data-market="forex" data-price="155" data-split="90" data-rating="4.8" data-name="ftmo">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a1a2e;color:#6c8ebf">FTMO</div><div><div class="firm-name">FTMO</div><div class="firm-country">🇨🇿 République Tchèque</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/ftmo.com" alt="FTMO" onerror="this.parentElement.style.background='#1a1a2e';this.parentElement.style.color='#6c8ebf';this.parentElement.innerHTML='FTMO'"></div><div><div class="firm-name">FTMO</div><div class="firm-country">🇨🇿 République Tchèque</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD · Crypto</span><span class="badge badge-popular">⭐ Le plus connu</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">€155 – €1 089</div></div>
@@ -314,7 +315,7 @@
 
     <!-- FundedNext -->
     <div class="firm-card" data-market="forex" data-price="49" data-split="95" data-rating="4.7" data-name="fundednext">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0f2027;color:#00b4d8">FN</div><div><div class="firm-name">FundedNext</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/fundednext.com" alt="FundedNext" onerror="this.parentElement.style.background='#0f2027';this.parentElement.style.color='#00b4d8';this.parentElement.innerHTML='FN'"></div><div><div class="firm-name">FundedNext</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Paiement 24h</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$49 – $999</div></div>
@@ -339,7 +340,7 @@
 
     <!-- The Funded Trader -->
     <div class="firm-card" data-market="forex" data-price="129" data-split="90" data-rating="4.3" data-name="the funded trader">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a0a00;color:#e07b39">TFT</div><div><div class="firm-name">The Funded Trader</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/thefundedtrader.com" alt="TFT" onerror="this.parentElement.style.background='#1a0a00';this.parentElement.style.color='#e07b39';this.parentElement.innerHTML='TFT'"></div><div><div class="firm-name">The Funded Trader</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD · Crypto</span><span class="badge badge-feat">Multi-comptes</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$129 – $599</div></div>
@@ -364,7 +365,7 @@
 
     <!-- Apex -->
     <div class="firm-card" data-market="futures" data-price="167" data-split="100" data-rating="4.5" data-name="apex trader funding">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a1628;color:#4a9eff">APX</div><div><div class="firm-name">Apex Trader Funding</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/apextraderfunding.com" alt="Apex" onerror="this.parentElement.style.background='#0a1628';this.parentElement.style.color='#4a9eff';this.parentElement.innerHTML='APX'"></div><div><div class="firm-name">Apex Trader Funding</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Futures uniquement</span><span class="badge badge-feat">100% profit split</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$167/mois</div></div>
@@ -389,7 +390,7 @@
 
     <!-- E8 Funding -->
     <div class="firm-card" data-market="forex" data-price="118" data-split="80" data-rating="4.2" data-name="e8 funding">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a1a0a;color:#4caf50">E8</div><div><div class="firm-name">E8 Funding</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/e8funding.com" alt="E8" onerror="this.parentElement.style.background='#0a1a0a';this.parentElement.style.color='#4caf50';this.parentElement.innerHTML='E8'"></div><div><div class="firm-name">E8 Funding</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Règles souples</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$118 – $588</div></div>
@@ -414,7 +415,7 @@
 
     <!-- MyFundedFX -->
     <div class="firm-card" data-market="forex" data-price="59" data-split="85" data-rating="4.1" data-name="myfundedfx">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a0a1a;color:#c084fc">MF</div><div><div class="firm-name">MyFundedFX</div><div class="firm-country">🇨🇿 République Tchèque</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/myfundedfx.tech" alt="MF" onerror="this.parentElement.style.background='#1a0a1a';this.parentElement.style.color='#c084fc';this.parentElement.innerHTML='MF'"></div><div><div class="firm-name">MyFundedFX</div><div class="firm-country">🇨🇿 République Tchèque</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Remboursement frais</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$59 – $399</div></div>
@@ -439,7 +440,7 @@
 
     <!-- True Forex Funds -->
     <div class="firm-card" data-market="forex" data-price="49" data-split="80" data-rating="4.0" data-name="true forex funds">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#001a10;color:#00c875">TFF</div><div><div class="firm-name">True Forex Funds</div><div class="firm-country">🇭🇺 Hongrie</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/trueforexfunds.com" alt="TFF" onerror="this.parentElement.style.background='#001a10';this.parentElement.style.color='#00c875';this.parentElement.innerHTML='TFF'"></div><div><div class="firm-name">True Forex Funds</div><div class="firm-country">🇭🇺 Hongrie</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · Métaux</span><span class="badge badge-feat">Pas de news trading</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">€49 – €389</div></div>
@@ -464,7 +465,7 @@
 
     <!-- Topstep -->
     <div class="firm-card" data-market="futures" data-price="149" data-split="90" data-rating="4.4" data-name="topstep">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a0a20;color:#7b68ee">TOP</div><div><div class="firm-name">Topstep</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/topstep.com" alt="Topstep" onerror="this.parentElement.style.background='#0a0a20';this.parentElement.style.color='#7b68ee';this.parentElement.innerHTML='TOP'"></div><div><div class="firm-name">Topstep</div><div class="firm-country">🇺🇸 États-Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Futures uniquement</span><span class="badge badge-feat">Leader futures</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$149/mois</div></div>
@@ -489,7 +490,7 @@
 
     <!-- Funding Pips -->
     <div class="firm-card" data-market="forex" data-price="99" data-split="90" data-rating="4.2" data-name="funding pips">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a1a0a;color:#56db40">FP</div><div><div class="firm-name">Funding Pips</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/fundingpips.com" alt="FP" onerror="this.parentElement.style.background='#0a1a0a';this.parentElement.style.color='#56db40';this.parentElement.innerHTML='FP'"></div><div><div class="firm-name">Funding Pips</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">No time limit</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$99 – $799</div></div>
@@ -514,7 +515,7 @@
 
     <!-- Bybit Funding -->
     <div class="firm-card" data-market="crypto" data-price="99" data-split="85" data-rating="4.0" data-name="bybit funding">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#0a0a1a;color:#f7a600">BYB</div><div><div class="firm-name">Bybit Funding</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/bybit.com" alt="Bybit" onerror="this.parentElement.style.background='#0a0a1a';this.parentElement.style.color='#f7a600';this.parentElement.innerHTML='BYB'"></div><div><div class="firm-name">Bybit Funding</div><div class="firm-country">🇦🇪 Émirats Arabes Unis</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Crypto uniquement</span><span class="badge badge-feat">Exchange intégré</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$99 – $699</div></div>
@@ -539,7 +540,7 @@
 
     <!-- Fidelcrest -->
     <div class="firm-card" data-market="forex" data-price="99" data-split="90" data-rating="4.0" data-name="fidelcrest">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a0a05;color:#ff7043">FC</div><div><div class="firm-name">Fidelcrest</div><div class="firm-country">🇨🇾 Chypre</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/fidelcrest.com" alt="FC" onerror="this.parentElement.style.background='#1a0a05';this.parentElement.style.color='#ff7043';this.parentElement.innerHTML='FC'"></div><div><div class="firm-name">Fidelcrest</div><div class="firm-country">🇨🇾 Chypre</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · CFD</span><span class="badge badge-feat">Compte agressif</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">€99 – €999</div></div>
@@ -564,7 +565,7 @@
 
     <!-- Lux Trading -->
     <div class="firm-card" data-market="forex" data-price="250" data-split="75" data-rating="3.9" data-name="lux trading firm">
-      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#1a1500;color:#d4af37">LTF</div><div><div class="firm-name">Lux Trading Firm</div><div class="firm-country">🇬🇧 Royaume-Uni</div></div></div></div>
+      <div class="card-top"><div class="firm-logo-area"><div class="firm-icon" style="background:#fff"><img src="https://logo.clearbit.com/luxtradingfirm.com" alt="LTF" onerror="this.parentElement.style.background='#1a1500';this.parentElement.style.color='#d4af37';this.parentElement.innerHTML='LTF'"></div><div><div class="firm-name">Lux Trading Firm</div><div class="firm-country">🇬🇧 Royaume-Uni</div></div></div></div>
       <div class="badges-row"><span class="badge badge-market">Forex · Actions</span><span class="badge badge-feat">Capital élevé</span></div>
       <div class="metrics-grid">
         <div class="metric"><div class="metric-label">Prix du challenge</div><div class="metric-value highlight">$250 – $3 000</div></div>
@@ -958,7 +959,8 @@ const firms = {
       ['News trading','Autorisé'],['Remboursement frais','Oui']
     ],
     pros: ['Aucune limite de temps','Paiement en 24 heures','90% profit split','Trading weekend autorisé'],
-    cons: ['Drawdown strict (8% total)','Moins connu en Europe','Capital max de $200k']
+    cons: ['Drawdown strict (8% total)','Moins connu en Europe','Capital max de $200k'],
+    affiliateUrl: 'https://app.fundingpips.com/register?ref=26B33FCD'
   },
   bybit: {
     icon: 'BYB', iconStyle: 'background:#0a0a1a;color:#f7a600',
@@ -1087,7 +1089,7 @@ function openFirmModal(key) {
       </div>
     </div>
     <div class="modal-cta-row">
-      <button class="modal-btn-primary" onclick="alert('Lien d\\'affiliation à configurer pour ${f.name}')">Accéder à ${f.name} →</button>
+      <button class="modal-btn-primary" onclick="${f.affiliateUrl ? `window.open('${f.affiliateUrl}','_blank')` : `alert('Lien d\\'affiliation à venir pour ${f.name}')`}">Accéder à ${f.name} →</button>
       <button class="modal-btn-sec" onclick="closeModal('firmModal')">Fermer</button>
     </div>
   `;
